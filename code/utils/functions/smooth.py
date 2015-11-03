@@ -12,8 +12,7 @@ def smooth_easy(data_4d):
 
 	Returns
     -------
-    smooth_results : array of the smoothed data from data_4d (same dimensions but super-voxels will be
-    					indicated by the same number)
+    smooth_results : numpy array of the smoothed data from data_4d
 	"""
 	return None
 	# for i in range 1 to (total number of voxels - 1)
@@ -34,7 +33,7 @@ def smooth_advanced(data_4d, factor=4):
 
     Returns
     -------
-    smooth_results : array of the smoothed data from data_4d
+    smooth_results : numpy array of the smoothed data from data_4d
 	"""
 	# Cut down data to be evenly split into 4 x 4 x 4 chunks (use mod %)
 	x_size = data_4d.shape[0]//factor
@@ -55,6 +54,30 @@ def smooth_advanced(data_4d, factor=4):
 
 	# Need a way to average the values that don't get touched upon??? Maybe??
 
-	return smooth_results	
+	return smooth_results
+
+def smooth_super_advanced(data_4d, cube_dim=4):
+	"""
+	Return a 'smoothed' version of data_4d by looking at a cube-chunk around each voxel.
+
+	Parameters
+	----------
+	data_4d : numpy array of 4 dimensions 
+        The image data of one subject
+    cube_dim : the length of one side of the cube that surrounds the voxel at hand
+    	Smoothing factor, will average the cube for new smoothed value
+
+    Idea: Wrap data_4d within a larger cube of zeros to take care of 'edge' voxel averages
+
+    Returns
+    -------
+    smooth_results : numpy array of 4 dimensions of smoothed values of data_4d
+	"""
+	
+	# Initialize a return list of zeros, same size as data_4d
+	smooth_results = np.zeros(data_4d.shape)
+	# Average by the neighors of each voxel
+	# input must be 'odd' look at nodes
+	return None
 
 	
