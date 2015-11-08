@@ -2,6 +2,7 @@
 Run with: 
     python smooth_script.py
 """
+
 import numpy as np
 import itertools
 from scipy.ndimage.filters import gaussian_filter
@@ -32,4 +33,3 @@ data = data[...,6:] # Knock off the first 6 observations.
 #######################
 # a. (my) smoothing   #
 #######################
-
