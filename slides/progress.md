@@ -14,25 +14,32 @@
 - 24 subjects
 - 3 conditions per subject
 
-## Methods/ Preliminary Results
+# Methods/ Preliminary Results
 
-# Convolution
+## Convolution
 - Worked with problems with event-related stimulus model
 
-# Smoothing
+# Methods/ Preliminary Results
+
+## Smoothing
 - Convolution with a Gaussian filter (scipy module)
 
-# Linear regression
+\includegraphics[scale=.5]{../images/original_slice.png}{../images/smoothed_slice.png}
+
+
+# Methods/ Preliminary Results
+
+## Linear regression
 - Multiple and single regression with stimulus (all conditions and seperate)
 
-# Hypothesis testing
+## Hypothesis testing
 - General t-tests on $\beta$ values
 - Across suject analysis
 
-# Time series
+## Time series
 - ARIMA(1,1,1) model
 
-# PCA
+## PCA
 - Modeling against
 - SVD
 
