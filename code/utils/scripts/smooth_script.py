@@ -1,10 +1,19 @@
 """ Script for smooth function.
 Run with: 
     python smooth_script.py
+<<<<<<< HEAD
+=======
+
+in the scripts directory
+>>>>>>> e0e9160063bf17f1d12866c4624031a00d0a36db
 """
 
 import numpy as np
 import itertools
+<<<<<<< HEAD
+=======
+import scipy.ndimage
+>>>>>>> e0e9160063bf17f1d12866c4624031a00d0a36db
 from scipy.ndimage.filters import gaussian_filter
 import matplotlib.pyplot as plt
 import nibabel as nib
@@ -16,6 +25,7 @@ pathtodata = "../../../data/ds009/sub001/"
 condition_location=pathtodata+"model/model001/onsets/task001_run001/"
 location_of_images="../../../images/"
 
+<<<<<<< HEAD
 sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 
 # Load events2neural from the stimuli module.
@@ -24,6 +34,21 @@ from event_related_fMRI_functions import hrf_single, convolution_specialized
 
 # Load our GLM functions. 
 from glm import glm, glm_diagnostics, glm_multiple
+=======
+#sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
+sys.path.append("../functions")
+
+# Load events2neural from the stimuli module.
+#from stimuli import events2neural
+#from event_related_fMRI_functions import hrf_single, convolution_specialized
+
+# Load our GLM functions. 
+#from glm import glm, glm_diagnostics, glm_multiple
+
+# Load smoothing function
+from smooth import smoothvoxels
+from Image_Visualizing import present_3d
+>>>>>>> e0e9160063bf17f1d12866c4624031a00d0a36db
 
 # Load the image data for subject 1.
 img = nib.load(pathtodata+"BOLD/task001_run001/bold.nii.gz")
@@ -33,3 +58,31 @@ data = data[...,6:] # Knock off the first 6 observations.
 #######################
 # a. (my) smoothing   #
 #######################
+<<<<<<< HEAD
+=======
+
+# Kind of arbitrary chosen time
+time = 7
+original_slice = data[..., 7]
+# full width at half maximum (FWHM) 
+sigma = 1.5
+smoothed_slice = smoothvoxels(data, sigma, time)
+
+# visually compare original_slice to smoothed_slice
+plt.imshow(present_3d(smoothed_slice))
+plt.colorbar()
+plt.title('Smoothed Slice')
+plt.clim(0,1600)
+plt.savefig(location_of_images+"smoothed_slice.png")
+
+plt.close()
+
+plt.imshow(present_3d(original_slice))
+plt.colorbar()
+plt.title('Original Slice')
+plt.clim(0,1600)
+plt.savefig(location_of_images+"original_slice.png")
+
+plt.close()
+
+>>>>>>> e0e9160063bf17f1d12866c4624031a00d0a36db
