@@ -40,8 +40,7 @@ cond1=np.loadtxt(condition_location+"cond001.txt")
 cond2=np.loadtxt(condition_location+"cond002.txt")
 cond3=np.loadtxt(condition_location+"cond003.txt")
 
-# Load benjamini-hochberg function
-from benjamini_hochberg import bh_procedure
+
 
 #######################
 # a. (my) convolution #
@@ -105,3 +104,14 @@ B,t,df,p = t_stat(data, my_hrf, np.array([0,1]))
 # d. bh_procedure #
 ###################
 
+# Load benjamini-hochberg function
+from benjamini_hochberg import bh_procedure
+significant_pvalues_1 = bh_procedure(data, p, .10)
+significant_pvalues_2 = bh_procedure(data, p, .25)
+significant_pvalues_3 = bh_procedure(data, p, .50)
+print("number of significant p-values with FDR = .10:")
+print(len(significant_pvalues_1))
+print("number of significant p-values with FDR = .25:")
+print(len(significant_pvalues_2))
+print("number of significant p-values with FDR = .50:")
+print(len(significant_pvalues_3))
