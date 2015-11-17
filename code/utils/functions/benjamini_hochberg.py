@@ -2,7 +2,7 @@ from scipy.stats import t as t_dist
 from glm import glm
 import numpy as np
 import numpy.linalg as npl
-from hypothesis import t_stat
+#from hypothesis import t_stat
 
 # Order the p-values from smallest to largest
 # p-value has a rank that is the index of itself in the ordered array
@@ -10,7 +10,7 @@ from hypothesis import t_stat
 # Compare each p-value to its critical value 
 # The largest p-value where p < (i/m)*Q is significant, and so are all the p-values before it 
 
-def bh_procedure(data_4d, convolved, c = [0,1], Q):
+def bh_procedure(data_4d, p_vals, Q):
 	"""
 	Return an array of the significant, valid tests
 		out of the p-values.
@@ -21,17 +21,10 @@ def bh_procedure(data_4d, convolved, c = [0,1], Q):
         The image data of one subject
 
 
-	convolved: numpy array of 1 dimension
-        The convolved time course
-
-	c: numpy array of 1 dimension
-        The contrast vector fo the weights of the beta vector. 
-        Default is [0,1] which corresponds to beta_1
+    p_vals: p-values from the t_stat function
 
     Q: The false discovery rate 
 
-    Note that the fourth dimension of `data_4d` (time or the number 
-    of volumes) must be the same as the length of `convolved`.
 
 	Returns
     -------
@@ -39,13 +32,13 @@ def bh_procedure(data_4d, convolved, c = [0,1], Q):
     	deemed significant.
 	"""
 	# Run the t_stat function from hypothesis
-	beta, t, df, p = t_stat(data_4d, convolved, c = [0,1])
+	#beta, t, df, p = t_stat(data_4d, convolved, c = [0,1])
 
 	# Sort the p-values
-	p_sorted = np.sort(p)
+	p_sorted = np.sort(p_vals)
 
 	# Number of tests
-	m = len(p)
+	m = len(p_vals)
 
 	# Build critical value array
 	critical_vals = []

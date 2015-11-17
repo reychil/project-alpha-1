@@ -1,24 +1,23 @@
-""" Script for Hypothesis testing functions.
+""" Script for benjamini-hochberg function.
 Run with: 
-    python hypothesis_script.py
+    python bh_script.py
+
+in the scripts directory
 """
 
-# Loading modules.
-import os
+from scipy.stats import t as t_dist
+from glm import glm
 import numpy as np
-from scipy.stats import gamma
-import matplotlib.pyplot as plt
-import nibabel as nib
-import sys
 import numpy.linalg as npl
+from hypothesis import t_stat
 
-# Paths. Use your own. 
-
+# Relative path to subject 1 data
 pathtodata = "../../../data/ds009/sub001/"
 condition_location=pathtodata+"model/model001/onsets/task001_run001/"
 location_of_images="../../../images/"
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
+#sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
+sys.path.append("../functions")
 
 # Load events2neural from the stimuli module
 from stimuli import events2neural
@@ -41,14 +40,14 @@ cond1=np.loadtxt(condition_location+"cond001.txt")
 cond2=np.loadtxt(condition_location+"cond002.txt")
 cond3=np.loadtxt(condition_location+"cond003.txt")
 
+
+
 #######################
 # a. (my) convolution #
 #######################
 
 all_stimuli=np.array(sorted(list(cond2[:,0])+list(cond3[:,0])+list(cond1[:,0]))) # could also just x_s_array
 my_hrf = convolution_specialized(all_stimuli,np.ones(len(all_stimuli)),hrf_single,np.linspace(0,239*2-2,239))
-
-
 
 ##################
 # b. np.convolve #
@@ -79,16 +78,10 @@ np_hrf=convolved[:N]
 
 
 
-#######################
-# a. (my) convolution #
-#######################
 
-all_stimuli=np.array(sorted(list(cond2[:,0])+list(cond3[:,0])+list(cond1[:,0]))) # could also just x_s_array
-my_hrf = convolution_specialized(all_stimuli,np.ones(len(all_stimuli)),hrf_single,np.linspace(0,239*2-2,239))
-
-
-#=================================================
-
+##################
+# c. t_stat      #
+##################
 """ Run hypothesis testing script"""
 
 
@@ -105,3 +98,20 @@ print(t_np,p_np)
 print("means of (t,p) for np convolution: (" +str(np.mean(t_np))+str(np.mean(p_np)) +")")
 B,t,df,p = t_stat(data, my_hrf, np.array([0,1]))
 
+
+
+###################
+# d. bh_procedure #
+###################
+
+# Load benjamini-hochberg function
+from benjamini_hochberg import bh_procedure
+significant_pvalues_1 = bh_procedure(data, p, .10)
+significant_pvalues_2 = bh_procedure(data, p, .25)
+significant_pvalues_3 = bh_procedure(data, p, .50)
+print("number of significant p-values with FDR = .10:")
+print(len(significant_pvalues_1))
+print("number of significant p-values with FDR = .25:")
+print(len(significant_pvalues_2))
+print("number of significant p-values with FDR = .50:")
+print(len(significant_pvalues_3))

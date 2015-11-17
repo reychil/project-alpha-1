@@ -22,13 +22,6 @@ location_of_images="../../../images/"
 #sys.path.append(os.path.join(os.path.dirname(__file__), "../functions/"))
 sys.path.append("../functions")
 
-# Load events2neural from the stimuli module.
-#from stimuli import events2neural
-#from event_related_fMRI_functions import hrf_single, convolution_specialized
-
-# Load our GLM functions. 
-#from glm import glm, glm_diagnostics, glm_multiple
-
 # Load smoothing function
 from smooth import smoothvoxels
 from Image_Visualizing import present_3d
@@ -46,13 +39,9 @@ data = data[...,6:] # Knock off the first 6 observations.
 time = 7
 original_slice = data[..., 7]
 # full width at half maximum (FWHM) 
-<<<<<<< HEAD
-sigma = 1.5
-smoothed_slice = smoothvoxels(data, sigma, time)
-=======
+
 fwhm = 1.5
 smoothed_slice = smoothvoxels(data, fwhm, time)
->>>>>>> 151a80b3392ce18e09dd52cad2a0b6c2d84503de
 
 # visually compare original_slice to smoothed_slice
 plt.imshow(present_3d(smoothed_slice))
