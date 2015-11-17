@@ -5,7 +5,10 @@ from scipy.ndimage.filters import gaussian_filter
 
 
 
-def smoothvoxels(data_4d, sigma, time):
+
+
+def smoothvoxels(data_4d, fwhm, time):
+
 
 	"""
 	Return a 'smoothed' version of data_4d.
@@ -16,7 +19,9 @@ def smoothvoxels(data_4d, sigma, time):
         The image data of one subject
 
 
-    sigma : width of normal gaussian curve
+
+    fwhm : width of normal gaussian curve
+
 
     time : time slice (4th dimension)
 
@@ -26,6 +31,8 @@ def smoothvoxels(data_4d, sigma, time):
     					indicated by the same number) in time slice indicated.
 	"""
 	time_slice = data_4d[..., time]
-	smooth_results = scipy.ndimage.filters.gaussian_filter(time_slice, sigma)
+
+	smooth_results = scipy.ndimage.filters.gaussian_filter(time_slice, fwhm)
+
 	return smooth_results
 
