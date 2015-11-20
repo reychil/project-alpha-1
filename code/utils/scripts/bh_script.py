@@ -106,12 +106,15 @@ B,t,df,p = t_stat(data, my_hrf, np.array([0,1]))
 
 # Load benjamini-hochberg function
 from benjamini_hochberg import bh_procedure
-significant_pvalues_1 = bh_procedure(data, p, .10)
-significant_pvalues_2 = bh_procedure(data, p, .25)
-significant_pvalues_3 = bh_procedure(data, p, .50)
-print("number of significant p-values with FDR = .10:")
-print(len(significant_pvalues_1))
-print("number of significant p-values with FDR = .25:")
-print(len(significant_pvalues_2))
-print("number of significant p-values with FDR = .50:")
-print(len(significant_pvalues_3))
+significant_pvalues_1 = bh_procedure(p, .10)
+significant_pvalues_2 = bh_procedure(p, .25)
+significant_pvalues_3 = bh_procedure(p, .50)
+
+# Reshape the significant values to the shape of the data
+
+#print("significant p-values with FDR = .10:")
+#print(len(significant_pvalues_1))
+#print("number of significant p-values with FDR = .25:")
+#print(len(significant_pvalues_2))
+#print("number of significant p-values with FDR = .50:")
+#print(len(significant_pvalues_3))
