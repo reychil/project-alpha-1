@@ -29,6 +29,16 @@ def bh_procedure(p_vals, Q):
 
     Note: You will have to reshape the output to the shape of the data set.
 	"""
+	# k is Q/m where m = len(p_vals)
+	k = Q/len(p_vals)
+
+	# Multiply an array of rank values by k
+	upper = k*np.array(0, 1 + len(p_vals))
+
+
+
+
+
 	# Sort the p-values
 	p_sorted = np.sort(p_vals)
 
