@@ -1,11 +1,12 @@
 import numpy as np
 import itertools
 import scipy.ndimage
+import math
 from scipy.ndimage.filters import gaussian_filter
 
 
 
-def smoothvoxels(data_4d, fwhm, time):
+def smoothvoxels(data_4d, sigma, time):
 
 	"""
 	Return a 'smoothed' version of data_4d.
@@ -26,6 +27,7 @@ def smoothvoxels(data_4d, fwhm, time):
     					indicated by the same number) in time slice indicated.
 	"""
 	time_slice = data_4d[..., time]
+	fwhm = 2*math.sqrt(2*math.log(2)*sigma)
 	smooth_results = scipy.ndimage.filters.gaussian_filter(time_slice, fwhm)
 	return smooth_results
 

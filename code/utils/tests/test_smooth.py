@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import nibabel as nib
 import os
 import sys
+import math
 from numpy.testing import assert_almost_equal
 from nose.tools import assert_not_equals
 
@@ -35,7 +36,7 @@ def test_smooth():
 	# assert that data at time 7 and non_smoothed_data are equal since fwhm = 0
 	assert_almost_equal(data[..., 7], non_smoothed_data)
 	
-	# Run the smoothvoxels function with fwhm = 5 at time 7
-	smoothed_data = smoothvoxels(data, 5, 7)
+	# Run the smoothvoxels function with sigma = 2 at time 7
+	smoothed_data = smoothvoxels(data, 2, 7)
 	# assert that data at time 7 and smoothed_data are not equal
 	assert_not_equals(data[..., 7].all(), smoothed_data.all())
