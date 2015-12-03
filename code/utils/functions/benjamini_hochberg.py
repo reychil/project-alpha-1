@@ -68,3 +68,5 @@ def bh_procedure(p_vals, Q):
 	# shape of returned array is (len,)
 	return np.array(final_p)
 
+# Masking functions
+
