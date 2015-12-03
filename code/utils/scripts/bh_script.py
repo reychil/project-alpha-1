@@ -319,17 +319,17 @@ for Q in [.05,.1,.25,.3,.4,.45,.49]:
 	plt.figure()
 
 plt.figure()
-test= to_3d
+test = to_3d
 # maybe some clustering or smoothing?
 
 
-off=np.max(test)
-for i in 1+np.arange(62):
-	for j in 1+np.arange(62):
-		for k in 1+np.arange(32):
-			if np.sum(to_3d[(i-1):(i+2),(j-1):(j+2),(k-1):(k+2)] <0) <5 and to_3d[i,j,k]<0:
-				test[i,j,k]=off
-				
+off = np.max(test)
+for i in 1 + np.arange(62):
+	for j in 1 + np.arange(62):
+		for k in 1 + np.arange(32):
+			if np.sum(to_3d[(i - 1):(i + 2),(j - 1):(j + 2),(k - 1):(k + 2)] < 0) < 10 and to_3d[i,j,k] < 0:
+				test[i,j,k] = off
+
 
 plt.imshow(present_3d(test),interpolation='nearest', cmap='seismic')
 plt.title(str(Q)+ " mini-smoothing")
