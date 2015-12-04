@@ -103,23 +103,40 @@ plt.show()
 #####################################
 ####### MULTIPLE TESTING ############
 #####################################
-#
-#
-# for i in sub_list:
-#     df=275
-#     t = np.load(t_data+i+"_tstat.npy")
-#     ltp = t_dist.cdf(abs(t), df)
-#     p = 1-ltp
-#
-#     significant_pvalues = bh_procedure(p, .25)
-#
-#     significant_pvalues = significant_pvalues.reshape(t_mean.shape)
-#
-#     final = present_3d(significant_pvalues)
-#
-#     plt.imshow(final,interpolation='nearest', cmap='seismic')
-#     plt.title("Significant P-values")
-#
-#     zero_out=max(abs(np.min(final)),np.max(final))
-#     plt.clim(-zero_out,zero_out)
-#     plt.colorbar()
+
+
+for i in sub_list:
+    df=275
+    t = np.load(t_data + i + "_tstat.npy")
+    ltp = t_dist.cdf(abs(t), df)
+    p = 1 - ltp
+
+    # ==== Benjamini Hochberg with Q = .45 === #
+    Q = .45
+    mask = nib.load(pathtodata + '/anatomy/inplane001_brain_mask.nii.gz')
+    mask_data = mask.get_data()
+    ones = np.ones(data.shape[:-1])
+    fitted_mask = make_mask(nes, mask_data, fit = True)
+    fitted_mask[fitted_mask > 0] = 1
+
+    mask_new = mask_data[::2, ::2, :]
+    assert(mask_new.shape == fitted_mask.shape)
+
+    p_3d = p.reshape(data.shape[:-1])
+
+    # call masking_reshape_start function, reshaped to 1d output
+    p_to_1d = masking_reshape_start(p_3d, mask_new)
+
+    # call bh_procedure where Q = .45
+    significant_pvalues = bh_procedure(p_to_1d, Q)
+    #significant_pvalues = bh_procedure(p, .25)
+    #significant_pvalues = significant_pvalues.reshape(t_mean.shape)
+    end_significant_pvalues = 2*masking_reshape_end(significant_pvalues, mask_new, .5) - 1
+    final = present_3d(end_significant_pvalues)
+    
+    plt.imshow(final, interpolation='nearest', cmap='seismic')
+    plt.title("Significant P-values")
+
+    zero_out = max(abs(np.min(final)), np.max(final))
+    plt.clim(-zero_out, zero_out)
+    plt.colorbar()
